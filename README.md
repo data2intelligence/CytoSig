@@ -28,7 +28,7 @@ CellSig.py -i input_profile -o output_prefix -r random_count -a penalty_alpha -e
 
 4, penalty_alpha: penalty weight in the ridge regression, with a default value 10000.  
 
-5, generate_excel: whether generate excel output. The value could be 1 (Yes) or 0 (No) with a default value 0. This option is only effective when the input variable count is less than 50.
+5, generate_excel: whether generate excel output. The value could be 1 (Yes) or 0 (No) with a default value 0. This option is only effective when the input condition count is less than 50.
 
 Example:    
 In the directory of README.md, please type: CellSig.py -i tests/GSE147507.diff.gz -o tests/output_test -e 1  
