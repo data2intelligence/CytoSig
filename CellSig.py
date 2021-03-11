@@ -157,7 +157,7 @@ def main():
         sys.stderr.write('Input file %s has zero column.\n' % inputfile)
         sys.exit(1)
     
-    signature = pandas.read_csv(os.path.join(fpath, 'data', 'diff.centroid'), sep='\t', index_col=0)
+    signature = pandas.read_csv(os.path.join(fpath, 'signature.centroid'), sep='\t', index_col=0)
     
     ###############################################################
     # run regression

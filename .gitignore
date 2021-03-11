@@ -2,4 +2,5 @@ build
 git_*
 .*project
 .settings
+*.egg-info
 *~
