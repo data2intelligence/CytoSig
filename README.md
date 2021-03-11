@@ -16,6 +16,7 @@ Usage:
 CellSig.py -i input_profile -o output_prefix -r random_count -a penalty_alpha -e generate_excel
 
 1, input_profile: input matrix of biological profiles. Each column is a biological condition, and each row should be a human gene symbol.  
+
 2, output_prefix: prefix of output files  
 	output_prefix.Coef: regression coefficients  
 	output_prefix.StdErr: standard error
@@ -24,7 +25,9 @@ CellSig.py -i input_profile -o output_prefix -r random_count -a penalty_alpha -e
 	output_prefix.xlsx: only exist if generate_excel = 1. A excel summary of results, with each input condition as one tab.
 
 3, random_count: number of randomizations in the permutation test, with a default value 1000. If value is 0, the program will use student t-test.    
+
 4, penalty_alpha: penalty weight in the ridge regression, with a default value 10000.  
+
 5, generate_excel: whether generate excel output. The value could be 1 (Yes) or 0 (No) with a default value 0. This option is only effective when the input variable count is less than 50.
 
 Example:    
