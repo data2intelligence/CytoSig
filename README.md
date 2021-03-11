@@ -17,7 +17,7 @@ CellSig.py -i input_profile -o output_prefix -r random_count -a penalty_alpha -e
 
 1, input_profile: input matrix of biological profiles. Each column is a biological condition, and each row should be a human gene symbol.  
 
-2, output_prefix: prefix of output files  
+2, output_prefix: prefix of output files. Each column is a biological condition, and each row is a cytokine name  
 	output_prefix.Coef: regression coefficients  
 	output_prefix.StdErr: standard error
 	output_prefix.Zscore: Coef/StdErr
