@@ -2,9 +2,11 @@ CellSig prediction model of cytokine signaling activity
 
 Prerequisite:  
 1, ridge_significance: https://github.com/data2intelligence/ridge_significance/releases    
-You will need numpy, gsl, gcc to install this package. Please read its README.md for details.
+Please read its README.md and run test to make sure the successful installation.  
 
-2, pandas: You may install anaconda (https://www.anaconda.com) to include all required python packages.
+2, pandas >= 1.1.4: You may install anaconda (https://www.anaconda.com) to include all required python packages.  
+3, xlrd >= 1.2.0: pip install --upgrade xlrd  
+
 
 Install:
 python setup.py install
