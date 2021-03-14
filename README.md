@@ -5,7 +5,7 @@ Prerequisite:
 Please read its README.md and run test to make sure the successful installation.  
 
 2, pandas >= 1.1.4: You may install anaconda (https://www.anaconda.com) to include all required python packages.  
-3, xlrd >= 1.2.0: pip install --upgrade xlrd  
+3, xlsxwriter >= 1.3.7: pip install --upgrade xlsxwriter  
 
 
 Install:
