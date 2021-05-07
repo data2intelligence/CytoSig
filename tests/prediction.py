@@ -9,7 +9,7 @@ output = os.path.join(fpath, 'output')
 
 class TestPrediction(unittest.TestCase):    
     def test_bulk(self):
-        cmd = ['CellSig.py', '-i', os.path.join(fpath, 'GSE147507.diff.gz'), '-o', output, '-e', '1']
+        cmd = ['CellSig_run.py', '-i', os.path.join(fpath, 'GSE147507.diff.gz'), '-o', output, '-e', '1']
         
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         p.communicate()

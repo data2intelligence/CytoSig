@@ -1,4 +1,6 @@
-import os, sys, setuptools
+import os, sys
+
+from setuptools import setup, find_packages
 from setuptools.command.install import install
 
 script_path = os.path.join(sys.prefix, 'bin')
@@ -9,10 +11,10 @@ with open("README.md", "r") as fh:
 
 class PostInstallCommand(install):
     def run(self):
-        os.system('chmod +x ' + os.path.join(script_path, 'CellSig.py'))
+        os.system('chmod +x ' + os.path.join(script_path, 'CellSig_run.py'))
         install.run(self)
 
-setuptools.setup(
+setup(
     name="CellSig",
     version="0.0.1",
     author="Peng Jiang",
@@ -24,7 +26,7 @@ setuptools.setup(
     
     url="https://github.com/data2intelligence/CellSig",
     
-    packages=setuptools.find_packages(),
+    packages=find_packages(),
     
     classifiers=[
         "Programming Language :: Python :: 3",
@@ -42,8 +44,8 @@ setuptools.setup(
     
     data_files=[
         ('bin', [
-            'CellSig.py',
-            os.path.join('data', 'signature.centroid'),
+            os.path.join('CellSig', 'CellSig_run.py'),
+            os.path.join('CellSig', 'signature.centroid'),
             ]),        
     ],
     
