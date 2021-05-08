@@ -14,8 +14,8 @@ python setup.py install
 Test:
 python -m unittest tests.prediction
 
-Usage:  
-CellSig.py -i input_profile -o output_prefix -r random_count -a penalty_alpha -e generate_excel
+Usage:
+CellSig_run.py -i input_profile -o output_prefix -r random_count -a penalty_alpha -e generate_excel
 
 1, input_profile: input matrix of biological profiles. Each column is a biological condition, and each row should be a human gene symbol. Please see "tests/GSE147507.diff.gz" as an example.  
 
@@ -32,6 +32,6 @@ CellSig.py -i input_profile -o output_prefix -r random_count -a penalty_alpha -e
 
 5, generate_excel: whether generate excel output. The value could be 1 (Yes) or 0 (No) with a default value 0. This option is only effective when the input condition count is less than 50.
 
-Example:    
-In the directory of README.md, please type: CellSig.py -i tests/GSE147507.diff.gz -o tests/output_test -e 1  
+Example:
+In the directory of README.md, please type: CellSig_run.py -i tests/GSE147507.diff.gz -o tests/output_test -e 1  
 Then, open "tests/output_test.xlsx" to view results  
