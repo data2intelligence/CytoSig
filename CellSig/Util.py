@@ -18,7 +18,7 @@ def array_to_dataframe(x, row_names, col_names):
     return x
 
 
-def ridge_significance_test(X, Y, alpha, alternative="two-sided", nrand=1000, cnt_thres=10):
+def ridge_significance_test(X, Y, alpha, alternative="two-sided", nrand=1000, cnt_thres=10, flag_normalize=True):
     verbose = True
     
     # if X Y index doesn't align
@@ -31,9 +31,10 @@ def ridge_significance_test(X, Y, alpha, alternative="two-sided", nrand=1000, cn
         
         Y, X = Y.loc[common], X.loc[common]
     
-    # normalize to zero mean and unit variation
-    X = (X - X.mean())/X.std()
-    Y = (Y - Y.mean())/Y.std()
+    if flag_normalize:
+        # normalize to zero mean and unit variation
+        X = (X - X.mean())/X.std()
+        Y = (Y - Y.mean())/Y.std()
     
     # decorate the results later
     X_columns = X.columns
