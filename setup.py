@@ -15,7 +15,7 @@ class PostInstallCommand(install):
         install.run(self)
 
 setup(
-    name="CellSig",
+    name="CytoSig",
     version="0.0.1",
     author="Peng Jiang",
     author_email="peng.jiang@nih.gov",
@@ -24,7 +24,7 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     
-    url="https://github.com/data2intelligence/CellSig",
+    url="https://github.com/data2intelligence/CytoSig",
     
     packages=find_packages(),
     
@@ -44,8 +44,8 @@ setup(
     
     data_files=[
         ('bin', [
-            os.path.join('CellSig', 'CellSig_run.py'),
-            os.path.join('CellSig', 'signature.centroid'),
+            os.path.join('CytoSig', 'CellSig_run.py'),
+            os.path.join('CytoSig', 'signature.centroid'),
             ]),        
     ],
     

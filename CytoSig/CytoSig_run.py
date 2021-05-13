@@ -3,7 +3,7 @@
 import os
 import sys
 import getopt
-import CellSig
+import CytoSig
 import pandas
 import pathlib
 
@@ -17,7 +17,7 @@ def main():
     
     inputfile = outputfile = response = None
     
-    prompt_msg = 'Usage:\nCellSig_run.py -i <input profiles> -o <output prefix> -r <randomization count, default: %d> -a <penalty alpha, default: %s> -e <generate excel report: 0|1, default: %d>\n' % (nrand, alpha, flag_report)
+    prompt_msg = 'Usage:\nCytoSig_run.py -i <input profiles> -o <output prefix> -r <randomization count, default: %d> -a <penalty alpha, default: %s> -e <generate excel report: 0|1, default: %d>\n' % (nrand, alpha, flag_report)
     
     try:
         opts, _ = getopt.getopt(sys.argv[1:], "hi:o:r:a:e:", [])
@@ -27,7 +27,7 @@ def main():
         sys.exit(2)
     
     if len(opts) == 0:
-        sys.stderr.write('Please input some parameters or try: CellSig_run.py -h\n')
+        sys.stderr.write('Please input some parameters or try: CytoSig_run.py -h\n')
         sys.exit(2)
     
     for opt, arg in opts:
@@ -75,7 +75,7 @@ def main():
         sys.exit(1)
     
     if outputfile is None:
-        outputfile = inputfile + '.CellSig_output'
+        outputfile = inputfile + '.CytoSig_output'
         sys.stderr.write('No output file input. Automatically generate one as %s\n' % outputfile)
     
     ###############################################################
@@ -105,7 +105,7 @@ def main():
     fields = ['Coef', 'StdErr', 'Zscore', 'Pvalue']
     
     try:
-        result = CellSig.ridge_significance_test(signature, response, alpha, 'two-sided', nrand, count_thres)
+        result = CytoSig.ridge_significance_test(signature, response, alpha, 'two-sided', nrand, count_thres)
     except:
         sys.stderr.write('Regression failure. Please contact author to trouble shoot\n')
         sys.exit(1)
