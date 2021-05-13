@@ -11,7 +11,7 @@ with open("README.md", "r") as fh:
 
 class PostInstallCommand(install):
     def run(self):
-        os.system('chmod +x ' + os.path.join(script_path, 'CellSig_run.py'))
+        os.system('chmod +x ' + os.path.join(script_path, 'CytoSig_run.py'))
         install.run(self)
 
 setup(
@@ -44,7 +44,7 @@ setup(
     
     data_files=[
         ('bin', [
-            os.path.join('CytoSig', 'CellSig_run.py'),
+            os.path.join('CytoSig', 'CytoSig_run.py'),
             os.path.join('CytoSig', 'signature.centroid'),
             ]),        
     ],
