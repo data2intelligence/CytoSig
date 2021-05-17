@@ -45,10 +45,10 @@ Input:
 Y: the expression matrix of your samples in pandas data frame. Each column name is a sample ID. Each row name is a human gene symbol.  
   
 Output: four pandas data frames  
---beta: regression coefficients  
---std: standard errors of coefficients
---zscore: beta/std  
---pvalue: statistical significance  
+beta: regression coefficients  
+std: standard errors of coefficients  
+zscore: beta/std  
+pvalue: statistical significance  
 
 Then, use the following code snippet in your program:  
 
