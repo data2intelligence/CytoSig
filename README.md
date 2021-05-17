@@ -14,7 +14,10 @@ python setup.py install
 Test:
 python -m unittest tests.prediction
 
-Usage:
+
+
+Usage 1, through command line:
+
 CytoSig_run.py -i input_profile -o output_prefix -r random_count -a penalty_alpha -e generate_excel
 
 1, input_profile: input matrix of biological profiles. Each column is a biological condition, and each row should be a human gene symbol. Please see "tests/GSE147507.diff.gz" as an example.  
@@ -35,3 +38,13 @@ CytoSig_run.py -i input_profile -o output_prefix -r random_count -a penalty_alph
 Example:
 In the directory of README.md, please type: CytoSig_run.py -i tests/GSE147507.diff.gz -o tests/output_test -e 1  
 Then, open "tests/output_test.xlsx" to view results  
+
+
+Usage 2, through Python function inside your customized code:  
+Input Y: the expression matrix of your samples in pandas data frame. Each column represents a sample ID. Each row name is a human gene symbol.  
+Then, use the following code snippet in your program:  
+
+import os, sys, pandas, CytoSig  
+signature = os.path.join(sys.prefix, 'bin', 'signature.centroid') # load in cytokine response signature  
+signature = pandas.read_csv(signature, sep='\t', index_col=0)  
+beta, std, zscore, pvalue = CytoSig.ridge_significance_test(signature, Y, alpha=1E4, alternative="two-sided", nrand=1000, cnt_thres=10, flag_normalize=True, verbose = True)  
