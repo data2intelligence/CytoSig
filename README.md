@@ -1,6 +1,6 @@
 CytoSig prediction model of cytokine signaling activity
 
-Prerequisite:  
+**Prerequisite**:  
 1, ridge_significance: https://github.com/data2intelligence/ridge_significance  
 Please read its README.md and run test to make sure the successful installation.  
 
@@ -8,15 +8,15 @@ Please read its README.md and run test to make sure the successful installation.
 3, xlsxwriter >= 1.3.7: pip install --upgrade xlsxwriter  
 
 
-Install:
+**Install**:
 python setup.py install
 
-Test:
+**Test**:
 python -m unittest tests.prediction
 
-Please see "tests/prediction.py" for examples of two usages explained below.  
+Please see **tests/prediction.py** for examples of two usages explained below.  
 
-Usage 1, through command line:
+**Usage 1, through command line**:  
 
 CytoSig_run.py -i input_profile -o output_prefix -r random_count -a penalty_alpha -e generate_excel
 
@@ -40,7 +40,7 @@ In the directory of README.md, please type: CytoSig_run.py -i tests/GSE147507.di
 Then, open "tests/output_test.xlsx" to view results  
 
 
-Usage 2, through Python function inside your customized code:  
+**Usage 2, through Python function inside your customized code**:  
 Input:  
 Y: the expression matrix of your samples in pandas data frame. Each column name is a sample ID. Each row name is a human gene symbol.  
   
