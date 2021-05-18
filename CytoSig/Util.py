@@ -19,6 +19,8 @@ def array_to_dataframe(x, row_names, col_names):
 
 
 def ridge_significance_test(X, Y, alpha, alternative="two-sided", nrand=1000, cnt_thres=10, flag_normalize=True, flag_const=False, verbose = True):
+    # convert X from series to data frame if necessary
+    if type(X) == pandas.Series: X = pandas.DataFrame(X)
     
     # if X Y index doesn't align
     if X.index.shape[0] != Y.index.shape[0] or sum(X.index != Y.index) > 0:
