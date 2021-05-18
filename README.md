@@ -14,7 +14,7 @@ python setup.py install
 Test:
 python -m unittest tests.prediction
 
-
+Please see "tests/prediction.py" for examples of two usages explained below.  
 
 Usage 1, through command line:
 
