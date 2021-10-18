@@ -46,7 +46,8 @@ setup(
         ('bin', [
             os.path.join('CytoSig', 'CytoSig_run.py'),
             os.path.join('CytoSig', 'signature.centroid'),
-            ]),        
+            os.path.join('CytoSig', 'signature.centroid.expand'),
+            ]),
     ],
     
     cmdclass={

@@ -18,7 +18,7 @@ Please see **tests/prediction.py** for examples of two usages explained below.
 
 **Usage 1, through command line**:  
 
-CytoSig_run.py -i input_profile -o output_prefix -r random_count -a penalty_alpha -e generate_excel
+CytoSig_run.py -i input_profile -o output_prefix -r random_count -a penalty_alpha -e generate_excel -s expand_signature  
 
 1, input_profile: input matrix of biological profiles. Each column is a biological condition, and each row should be a human gene symbol. Please see "tests/GSE147507.diff.gz" as an example.  
 The expression values, from either RNASeq or MicroArray, should be transformed by log2(x+1). x could be FPKM, RPKM, or TPM for RNASeq. For single-cell RNASeq data, we used log2(TPM/10 + 1). We also recommend quantile-normalization across conditions. Some software package, such as RMA or DESeq, will automatically include all normalizations. We recommend input differential profiles between the two conditions. If data is from a sample collection without pairs, please mean-centralize the value of each gene across all samples.
@@ -35,6 +35,8 @@ The expression values, from either RNASeq or MicroArray, should be transformed b
 4, penalty_alpha: penalty weight in the ridge regression, with a default value 10000.  
 
 5, generate_excel: whether generate excel output. The value could be 1 (Yes) or 0 (No) with a default value 0. This option is only effective when the input condition count is less than 50.
+
+6, expand_signature: whether use an expanded signature of cytokine response. Our initial cytokine response signature included 43 cytokines with high confidence data. However, we can also set a less stringent filter to include 51 cytokines.  
 
 Example:
 In the directory of README.md, please type: CytoSig_run.py -i tests/GSE147507.diff.gz -o tests/output_test -e 1  

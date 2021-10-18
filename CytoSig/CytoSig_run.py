@@ -13,14 +13,16 @@ def main():
     count_thres = 50
     alpha = 10000
     nrand = 1000
+    
     flag_report = False
+    flag_expand = False
     
     inputfile = outputfile = response = None
     
-    prompt_msg = 'Usage:\nCytoSig_run.py -i <input profiles> -o <output prefix> -r <randomization count, default: %d> -a <penalty alpha, default: %s> -e <generate excel report: 0|1, default: %d>\n' % (nrand, alpha, flag_report)
+    prompt_msg = 'Usage:\nCytoSig_run.py -i <input profiles> -o <output prefix> -r <randomization count, default: %d> -a <penalty alpha, default: %s> -e <generate excel report: 0|1, default: %d> -s <use an expanded response signature: 0|1, default: %d>\n' % (nrand, alpha, flag_report, flag_expand)
     
     try:
-        opts, _ = getopt.getopt(sys.argv[1:], "hi:o:r:a:e:", [])
+        opts, _ = getopt.getopt(sys.argv[1:], "hi:o:r:a:e:s:", [])
     
     except getopt.GetoptError:
         sys.stderr.write('Error input\n' + prompt_msg)
@@ -65,6 +67,10 @@ def main():
             
         elif opt in ("-e"):
             flag_report = (int(arg) != False)
+            
+        elif opt in ("-s"):
+            flag_expand = (int(arg) != False)
+    
     
     if inputfile is None:
         sys.stderr.write('Please provide a input file\n')
@@ -97,7 +103,11 @@ def main():
         sys.stderr.write('Input file %s has zero column.\n' % inputfile)
         sys.exit(1)
     
-    signature = pandas.read_csv(os.path.join(fpath, 'signature.centroid'), sep='\t', index_col=0)
+    
+    signature = os.path.join(fpath, 'signature.centroid')
+    if flag_expand: signature += '.expand'
+    
+    signature = pandas.read_csv(signature, sep='\t', index_col=0)
     
     ###############################################################
     # run regression
