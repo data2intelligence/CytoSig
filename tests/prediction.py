@@ -40,7 +40,8 @@ class TestPrediction(unittest.TestCase):
         
         try:
             beta, std, zscore, pvalue = CytoSig.ridge_significance_test(signature, Y, alpha=1E4, alternative="two-sided", nrand=1000, cnt_thres=10, flag_normalize=True, verbose = True)
-        except:
+        except Exception as err:
+            print('Error:', err)
             self.assertTrue(False)
             
         # make sure the two usages get the same result        
