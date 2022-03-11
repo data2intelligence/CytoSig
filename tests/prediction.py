@@ -16,7 +16,11 @@ class TestPrediction(unittest.TestCase):
         cmd = ['CytoSig_run.py', '-i', Y, '-o', output, '-e', '1']
         
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        p.communicate()
+        out,err = p.communicate()
+        out,err = out.decode().strip(), err.decode().strip()
+        
+        print('Output:\n', out)
+        if len(err) > 0: print('Error:\n', err)
         
         result_map = {}
         
