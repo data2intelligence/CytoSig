@@ -6,23 +6,28 @@ import getopt
 import CytoSig
 import pandas
 import pathlib
+import numpy
 
 fpath = pathlib.Path(__file__).parent.absolute()
+
+
 
 def main():
     count_thres = 50
     alpha = 10000
     nrand = 1000
+    min_count = 1000
+    zero_ratio = 0.95
     
     flag_report = False
     flag_expand = False
     
-    inputfile = outputfile = response = None
+    inputfile = outputfile = response = cellranger_lst = None
     
-    prompt_msg = 'Usage:\nCytoSig_run.py -i <input profiles> -o <output prefix> -r <randomization count, default: %d> -a <penalty alpha, default: %s> -e <generate excel report: 0|1, default: %d> -s <use an expanded response signature: 0|1, default: %d>\n' % (nrand, alpha, flag_report, flag_expand)
+    prompt_msg = 'Usage:\nCytoSig_run.py -i <input profiles> -o <output prefix> -r <randomization count, default: %d> -a <penalty alpha, default: %s> -e <generate excel report: 0|1, default: %d> -s <use an expanded response signature: 0|1, default: %d> -c <minimum read count if input cellranger mtx, default: %d> -z <maximum zero dropout ratio, default: %s>\n' % (nrand, alpha, flag_report, flag_expand, min_count, zero_ratio)
     
     try:
-        opts, _ = getopt.getopt(sys.argv[1:], "hi:o:r:a:e:s:", [])
+        opts, _ = getopt.getopt(sys.argv[1:], "hi:o:r:a:e:s:c:z:", [])
     
     except getopt.GetoptError:
         sys.stderr.write('Error input\n' + prompt_msg)
@@ -70,15 +75,32 @@ def main():
             
         elif opt in ("-s"):
             flag_expand = (int(arg) != False)
-    
+            
+        elif opt in ("-c"):
+            min_count = int(arg)
+        
+        elif opt in ("-z"):
+            try:
+                zero_ratio = float(arg)
+            except:
+                sys.stderr.write('zero_ratio %s is not a valid float number.\n' % arg)
+                sys.exit(1)
+            
+            if zero_ratio <= 0:
+                sys.stderr.write('zero_ratio %s <= 0. Please input a number > 0\n' % zero_ratio)
+                sys.exit(1)
     
     if inputfile is None:
         sys.stderr.write('Please provide a input file\n')
         sys.exit(1)
     
-    elif not os.path.exists(inputfile):
-        sys.stderr.write('Cannot find input file %s\n' % inputfile)
-        sys.exit(1)
+    elif os.path.isdir(inputfile) or not os.path.exists(inputfile):
+        # two possibilities: 1, mtx file, 2, true not exist
+        cellranger_lst = CytoSig.analyze_cellranger_lst(inputfile)
+        
+        if cellranger_lst is None or len(cellranger_lst) == 0:
+            sys.stderr.write('Cannot find input file %s\n' % inputfile)
+            sys.exit(1)
     
     if outputfile is None:
         outputfile = inputfile + '.CytoSig_output'
@@ -86,15 +108,46 @@ def main():
     
     ###############################################################
     # read input
-    
     try:
-        file_type = inputfile.split('.').pop().lower()
+        if len(cellranger_lst) > 0:
+            merge = []
+            
+            for fields in cellranger_lst:
+                barcodes, genes, matrix = fields
+                matrix = CytoSig.load_mtx(barcodes, genes, matrix, min_count)
+                merge.append(matrix)
+            
+            response = pandas.concat(merge, axis=1, join='inner')
+            response = response.loc[(response == 0).mean(axis=1) < zero_ratio]
+            response = response.loc[:, response.sum() >= min_count]
+            
+            size_factor = 1E5/response.sum()
+            response *= size_factor
+            response = numpy.log2(response + 1)
+            
+            # always centralize on all cells, instead of included cells
+            background = response.mean(axis=1)
+            response = response.subtract(background, axis=0)
+            
+            response = response.sparse.to_dense()
+            print(response.shape, 'created from cell ranger outputs')
+            
+            # save the merged matrix in pickle format
+            response.to_pickle(outputfile + '.input.pickle.gz', sep='\t', index_label=False)
         
-        if file_type in ['xls', 'xlsx']:
-            response = pandas.read_excel(inputfile, index_col=0)
         else:
-            response = pandas.read_csv(inputfile, sep='\t', index_col=0)
-    
+            fields = inputfile.split('.')
+            file_type = fields.pop().lower()
+            
+            if file_type in ['xls', 'xlsx']:
+                response = pandas.read_excel(inputfile, index_col=0)
+            
+            elif file_type in ['pickle', 'pkl'] or (file_type == 'gz' and fields.pop().lower() in ['pickle', 'pkl']):
+                response = pandas.read_pickle(inputfile)
+            
+            else:
+                response = pandas.read_csv(inputfile, sep='\t', index_col=0)
+        
     except:
         sys.stderr.write('Fail to open input file %s\n' % inputfile)
         sys.exit(1)
