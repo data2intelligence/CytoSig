@@ -109,7 +109,7 @@ def main():
     ###############################################################
     # read input
     try:
-        if len(cellranger_lst) > 0:
+        if cellranger_lst is not None and len(cellranger_lst) > 0:
             merge = []
             
             for fields in cellranger_lst:
@@ -133,7 +133,7 @@ def main():
             print(response.shape, 'created from cell ranger outputs')
             
             # save the merged matrix in pickle format
-            response.to_pickle(outputfile + '.input.pickle.gz', sep='\t', index_label=False)
+            response.to_pickle(outputfile + '.input.pickle.gz', compression='gzip')
         
         else:
             fields = inputfile.split('.')
