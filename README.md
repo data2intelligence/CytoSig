@@ -18,7 +18,7 @@ Please see **tests/prediction.py** for examples of two usages explained below.
 
 **Usage 1, through command line**:  
 
-CytoSig_run.py -i input_profile -o output_prefix -r random_count -a penalty_alpha -e generate_excel -s expand_signature  
+CytoSig_run.py -i input_profile -o output_prefix -r random_count -a penalty_alpha -e generate_excel -s expand_signature -c minimum_read_count -z max_dropout_ratio  
 
 1, input_profile: input matrix of biological profiles. Three categories of formats are acceptable.  
 
@@ -27,17 +27,7 @@ The expression values, from either RNASeq or MicroArray, should be transformed b
 
 -Format b, python pickle formats: for matrix format in option a, you can save them as python pickle with names as "*.pickle.gz", "*.pkl.gz" or "*.pickle", "*.pkl".   
 
--Format c, cell ranger output: with file path and file name prefix separated by ",". This option will normalize and log-transform counts data and mean centralize the expression value across all single cells for each gene.  
-
-For example, download some sample cellranger output files:  
-> wget --no-check-certificate [https://hpc.nih.gov/~Jiang_Lab/Tres/GSE139829_sample.tar.gz](https://hpc.nih.gov/~Jiang_Lab/Tres/GSE139829_sample.tar.gz)  
-> tar xvf GSE139829_sample.tar.gz  
-  
-Then, the input profile can be spelled as GSE139829_sample/GSM4147093\_UMM059\_,GSM4147096\_UMM063\_,GSM4147099\_UMM066\_  
-You can run CytoSig like this:  
-CytoSig_run.py -i GSE139829\_sample/GSM4147093\_UMM059\_,GSM4147096\_UMM063\_,GSM4147099\_UMM066\_ -o output    
-
-
+-Format c, cell ranger output: with file path and file name prefix separated by ",". This option will normalize and log-transform counts data and mean centralize the expression value across all single cells for each gene. Please see Example 2 below.  
 **For Seurat users**: please save your Seurat object as cell ranger output with the following R commands, and then run with this option.  
 > library(DropletUtils)  
 > write10xCounts(x = your_object_name@assays$RNA@counts, path = "folder_path", version="3")  
@@ -57,9 +47,21 @@ CytoSig_run.py -i GSE139829\_sample/GSM4147093\_UMM059\_,GSM4147096\_UMM063\_,GS
 
 6, expand_signature: whether use an expanded signature of cytokine response. Our initial cytokine response signature included 43 cytokines with high confidence data. However, we can also set a less stringent filter to include 51 cytokines.  
 
-Example:
+All following options will only be effective if the input is cell ranger output.  
+7, minimum_read_count: Minimal read counts required for each barcode. Default 1000  
+8, max_dropout_ratio: Maximal zero drop out rates allowed for each gene. Default 0.95  
+
+Example 1:
 In the directory of README.md, please type: CytoSig_run.py -i tests/GSE147507.diff.gz -o tests/output_test -e 1  
 Then, open "tests/output_test.xlsx" to view results  
+
+Example 2:
+Download some sample cellranger output files:  
+> wget --no-check-certificate [https://hpc.nih.gov/~Jiang_Lab/Tres/GSE139829_sample.tar.gz](https://hpc.nih.gov/~Jiang_Lab/Tres/GSE139829_sample.tar.gz)  
+> tar xvf GSE139829_sample.tar.gz  
+  
+Then, run CytoSig like this:  
+CytoSig_run.py -i GSE139829\_sample/GSM4147093\_UMM059\_,GSM4147096\_UMM063\_,GSM4147099\_UMM066\_ -o output    
 
 
 **Usage 2, through Python function inside your customized code**:  
