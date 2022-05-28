@@ -34,7 +34,7 @@ For example, download some sample cellranger output files:
   
 Then, the input profile can be spelled as download_folder/GSE139829_sample/GSM4147093\_UMM059\_,GSM4147096\_UMM063\_,GSM4147099\_UMM066\_  
 You can run CytoSig like this:  
-> CytoSig_run.py -i GSM4147093\_UMM059\_,GSM4147096\_UMM063\_,GSM4147099\_UMM066\_ -o output    
+> CytoSig_run.py -i download\_folder/GSE139829\_sample/GSM4147093\_UMM059\_,GSM4147096\_UMM063\_,GSM4147099\_UMM066\_ -o output    
 
 
 **For Seurat users**: please save your Seurat object as cell ranger output with the following R commands, and then run with this option.  
