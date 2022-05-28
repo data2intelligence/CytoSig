@@ -99,14 +99,23 @@ def main():
         outputfile = inputfile + '.CytoSig_output'
         sys.stderr.write('No output file input. Automatically generate one as %s\n' % outputfile)
     
+    
+    ###############################################################
+    # load regression signature
+    signature = os.path.join(fpath, 'signature.centroid')
+    if flag_expand: signature += '.expand'
+    
+    signature = pandas.read_csv(signature, sep='\t', index_col=0)
+    
     ###############################################################
     # read input
+    
     try:
         if os.path.isdir(inputfile) or not os.path.exists(inputfile):
             # two possibilities: 1, mtx file, 2, true not exist
             
             # get read count data from cell ranger output
-            response = CytoSig.analyze_cellranger_lst(inputfile, min_count)
+            response = CytoSig.analyze_cellranger_lst(inputfile, min_count, included=signature.index)
         
             if response is None:
                 sys.stderr.write('Cannot find input file %s\n' % inputfile)
@@ -157,12 +166,7 @@ def main():
         sys.stderr.write('Input file %s has zero column.\n' % inputfile)
         sys.exit(1)
     
-    
-    signature = os.path.join(fpath, 'signature.centroid')
-    if flag_expand: signature += '.expand'
-    
-    signature = pandas.read_csv(signature, sep='\t', index_col=0)
-    
+
     ###############################################################
     # run regression
     

@@ -70,7 +70,15 @@ def ridge_significance_test(X, Y, alpha, alternative="two-sided", nrand=1000, cn
 
 
 
-def load_cell_ranger(genes, features, barcodes, matrix, min_count):
+def load_cell_ranger(genes, features, barcodes, matrix, min_count, included = None):
+    """
+    genes: cell ranger v2
+    features: cell ranger v3
+    barcodes, matrix: cell ranger files
+    min_count: minimal read count required for each cell
+    included: whether focus on pre-defined gene subset
+    """
+    
     # when use this function, the previous function should make sure either genes or features exists
     if genes is not None:
         genes = pandas.read_csv(genes, sep='\t', header=None).iloc[:, -1]
@@ -103,13 +111,17 @@ def load_cell_ranger(genes, features, barcodes, matrix, min_count):
     
     assert matrix.index.value_counts().max() == 1
     
+    # restrain on pre-defined gene set as not all genes will involve in later regressions.
+    if included is not None:
+        matrix = matrix.loc[matrix.index.intersection(included)]
+    
     # remove empty genes
     matrix = matrix.loc[(matrix == 0).mean(axis=1) < 1]
     
     return matrix
 
 
-def analyze_cellranger_lst(inputfile, min_count):
+def analyze_cellranger_lst(inputfile, min_count, included = None):
     results = []
     
     # first split file path and file list
@@ -151,7 +163,7 @@ def analyze_cellranger_lst(inputfile, min_count):
         
         if flag_err: continue
         
-        mat = load_cell_ranger(genes, features, vmap['barcodes.tsv'], vmap['matrix.mtx'], min_count)
+        mat = load_cell_ranger(genes, features, vmap['barcodes.tsv'], vmap['matrix.mtx'], min_count, included=included)
         
         # multiple files, put file name as conditions
         if len(condi) > 0 and len(input_lst) > 0:
