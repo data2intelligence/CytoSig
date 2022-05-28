@@ -27,7 +27,8 @@ The expression values, from either RNASeq or MicroArray, should be transformed b
 
 -Format b, python pickle formats: for matrix format in option a, you can save them as python pickle with names as "*.pickle.gz", "*.pkl.gz" or "*.pickle", "*.pkl".   
 
--Format c, cell ranger output: with file path and file name prefix separated by ","  
+-Format c, cell ranger output: with file path and file name prefix separated by ",". This option will normalize and log-transform counts data and mean centralize the gene value across all single cells.  
+
 For example, download some sample cellranger output files:  
 > wget --no-check-certificate [https://hpc.nih.gov/~Jiang_Lab/Tres/GSE139829_sample.tar.gz](https://hpc.nih.gov/~Jiang_Lab/Tres/GSE139829_sample.tar.gz)  
 > tar xvf GSE139829_sample.tar.gz  
