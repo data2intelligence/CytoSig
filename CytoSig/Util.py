@@ -1,6 +1,7 @@
 import pandas, numpy, sys, os
 import ridge_significance
 
+from glob import glob
 from scipy import io
 
 
@@ -69,16 +70,20 @@ def ridge_significance_test(X, Y, alpha, alternative="two-sided", nrand=1000, cn
 
 
 
-def load_mtx(barcodes, genes, matrix, min_count):        
+def load_cell_ranger(genes, features, barcodes, matrix, min_count):
+    # when use this function, the previous function should make sure either genes or features exists
+    if genes is not None:
+        genes = pandas.read_csv(genes, sep='\t', header=None).iloc[:, -1]
+    else:
+        features = pandas.read_csv(features, sep='\t', header=None)
+        genes = features.loc[features.iloc[:, -1] == 'Gene Expression', 1]
+    
     matrix = io.mmread(matrix)
     matrix = pandas.DataFrame.sparse.from_spmatrix(matrix)
     
     # assume first column of barcodes
-    barcodes = pandas.read_csv(barcodes, sep='\t', header=None).iloc[:,0]
-    
-    # assume last column of genes is symbols
-    genes = pandas.read_csv(genes, sep='\t', header=None).iloc[:, -1]
-    
+    barcodes = pandas.read_csv(barcodes, sep='\t', header=None).iloc[:,0]    
+        
     assert matrix.shape[0] == genes.shape[0]
     assert matrix.shape[1] == barcodes.shape[0]
     
@@ -104,50 +109,53 @@ def load_mtx(barcodes, genes, matrix, min_count):
     return matrix
 
 
-
-def analyze_cellranger_lst(inputfile):
+def analyze_cellranger_lst(inputfile, min_count):
     results = []
     
     # first split file path and file list
     fpath = os.path.dirname(inputfile)
     input_lst = os.path.basename(inputfile).split(',')
     
+    fields = ['barcodes.tsv', 'genes.tsv', 'features.tsv', 'matrix.mtx']
+    
     for fprefix in input_lst:
         fprefix = os.path.join(fpath, fprefix)
         
-        barcodes = fprefix + 'barcodes.tsv.gz'
-        genes = fprefix + 'genes.tsv.gz'
-        matrix = fprefix + 'matrix.mtx.gz'
+        flag_err = False
+        vmap = {}
         
-        # tuples
-        fields = [barcodes, genes, matrix]
-        flag = True
-        
-        for f in fields:
-            if not os.path.exists(f):
-                sys.stderr.write('Error: cannot find %s\n' % f)
-                flag = False
-        
-        if flag:
-            results.append(fields)
-        
-        else:
-            # try without gz
-            barcodes = fprefix + 'barcodes.tsv'
-            genes = fprefix + 'genes.tsv'
-            matrix = fprefix + 'matrix.mtx'
+        for title in fields:
+            files = glob(fprefix + title + '*')
             
-            # tuples
-            fields = [barcodes, genes, matrix]
-            flag = True
+            if len(files) > 1:
+                sys.stderr.write('Ambiguous %s file for %s.\n' % (title, fprefix))
+                flag_err = True
+                continue
             
-            for f in fields:
-                if not os.path.exists(f):
-                    sys.stderr.write('Error: cannot find %s\n' % f)
-                    flag = False
+            if len(files) == 0:
+                if title in ['barcodes.tsv', 'matrix.mtx']:
+                    sys.stderr.write('Cannot find %s file for %s.\n' % (title, fprefix))
+                    flag_err = True
+                continue
             
-            if flag:
-                results.append(fields)
+            # len(files) == 1
+            vmap[title] = files.pop()
         
+        # find genes
+        genes = vmap.get('genes.tsv')
+        features = vmap.get('features.tsv')
+        
+        if genes is None and features is None:
+            sys.stderr.write('Cannot find gene file for %s.\n' % fprefix)
+            flag_err = True
+        
+        if flag_err: continue
+        
+        mat = load_cell_ranger(genes, features, vmap['barcodes.tsv'], vmap['matrix.mtx'], min_count)
+        results.append(mat)
     
-    return results
+    if len(results) == 0:
+        sys.stderr.write('No matrix found.\n')
+        return None
+    
+    return pandas.concat(results, axis=1, join='inner')

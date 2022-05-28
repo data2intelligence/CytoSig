@@ -22,7 +22,7 @@ def main():
     flag_report = False
     flag_expand = False
     
-    inputfile = outputfile = response = cellranger_lst = None
+    inputfile = outputfile = response = None
     
     prompt_msg = 'Usage:\nCytoSig_run.py -i <input profiles> -o <output prefix> -r <randomization count, default: %d> -a <penalty alpha, default: %s> -e <generate excel report: 0|1, default: %d> -s <use an expanded response signature: 0|1, default: %d> -c <minimum read count if input cellranger mtx, default: %d> -z <maximum zero dropout ratio, default: %s>\n' % (nrand, alpha, flag_report, flag_expand, min_count, zero_ratio)
     
@@ -94,13 +94,6 @@ def main():
         sys.stderr.write('Please provide a input file\n')
         sys.exit(1)
     
-    elif os.path.isdir(inputfile) or not os.path.exists(inputfile):
-        # two possibilities: 1, mtx file, 2, true not exist
-        cellranger_lst = CytoSig.analyze_cellranger_lst(inputfile)
-        
-        if cellranger_lst is None or len(cellranger_lst) == 0:
-            sys.stderr.write('Cannot find input file %s\n' % inputfile)
-            sys.exit(1)
     
     if outputfile is None:
         outputfile = inputfile + '.CytoSig_output'
@@ -109,15 +102,14 @@ def main():
     ###############################################################
     # read input
     try:
-        if cellranger_lst is not None and len(cellranger_lst) > 0:
-            merge = []
-            
-            for fields in cellranger_lst:
-                barcodes, genes, matrix = fields
-                matrix = CytoSig.load_mtx(barcodes, genes, matrix, min_count)
-                merge.append(matrix)
-            
-            response = pandas.concat(merge, axis=1, join='inner')
+        if os.path.isdir(inputfile) or not os.path.exists(inputfile):
+            # two possibilities: 1, mtx file, 2, true not exist
+            response = CytoSig.analyze_cellranger_lst(inputfile, min_count)
+        
+            if response is None:
+                sys.stderr.write('Cannot find input file %s\n' % inputfile)
+                sys.exit(1)
+    
             response = response.loc[(response == 0).mean(axis=1) < zero_ratio]
             response = response.loc[:, response.sum() >= min_count]
             
