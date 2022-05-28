@@ -47,7 +47,7 @@ The expression values, from either RNASeq or MicroArray, should be transformed b
 
 6, expand_signature: whether use an expanded signature of cytokine response. Our initial cytokine response signature included 43 cytokines with high confidence data. However, we can also set a less stringent filter to include 51 cytokines.  
 
-All following options will only be effective if the input is cell ranger output.  
+Following options will only be effective if the input is cell ranger output.  
 7, minimum_read_count: Minimal read counts required for each barcode. Default 1000  
 8, max_dropout_ratio: Maximal zero drop out rates allowed for each gene. Default 0.95  
 
