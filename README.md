@@ -28,9 +28,9 @@ The expression values, from either RNASeq or MicroArray, should be transformed b
  -Format b, python pickle formats: for matrix format in option a, you can save them as python pickle with names as "*.pickle.gz", "*.pkl.gz" or "*.pickle", "*.pkl".   
 
  -Format c, cell ranger output: with file path and file name prefix separated by ","  
-**For Seurat users**: please save your Seurat object as cell ranger output with the following R command, and then run with this option.
-library(DropletUtils)  
-write10xCounts(x = your_object_name@assays$RNA@counts, path = "folder_path", version="3")  
+**For Seurat users**: please save your Seurat object as cell ranger output with the following R command, and then run with this option.  
+> library(DropletUtils)  
+> write10xCounts(x = your_object_name@assays$RNA@counts, path = "folder_path", version="3")  
   
 2, output_prefix: prefix of output files. Each column is a biological condition, and each row is a cytokine name  
     output_prefix.Coef: regression coefficients  
