@@ -104,20 +104,26 @@ def main():
     try:
         if os.path.isdir(inputfile) or not os.path.exists(inputfile):
             # two possibilities: 1, mtx file, 2, true not exist
+            
+            # get read count data from cell ranger output
             response = CytoSig.analyze_cellranger_lst(inputfile, min_count)
         
             if response is None:
                 sys.stderr.write('Cannot find input file %s\n' % inputfile)
                 sys.exit(1)
-    
+
+            # filter bad genes
             response = response.loc[(response == 0).mean(axis=1) < zero_ratio]
+            
+            # filter bad cell barcodes
             response = response.loc[:, response.sum() >= min_count]
             
+            # log-transform data
             size_factor = 1E5/response.sum()
             response *= size_factor
             response = numpy.log2(response + 1)
             
-            # always centralize on all cells, instead of included cells
+            # always centralize on all cells, instead of included cells, if you want a different normalization, please change these codes.
             background = response.mean(axis=1)
             response = response.subtract(background, axis=0)
             
