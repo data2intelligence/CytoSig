@@ -152,7 +152,10 @@ def analyze_cellranger_lst(inputfile, min_count):
         if flag_err: continue
         
         mat = load_cell_ranger(genes, features, vmap['barcodes.tsv'], vmap['matrix.mtx'], min_count)
-        mat.columns = condi + '.' + mat.columns
+        
+        # multiple files, put file name as conditions
+        if len(condi) > 0 and len(input_lst) > 0:
+            mat.columns = condi + '.' + mat.columns
         
         results.append(mat)
     
