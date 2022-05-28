@@ -125,7 +125,7 @@ def main():
             print(response.shape, 'created from cell ranger outputs')
             
             # save the merged matrix in pickle format
-            response.to_pickle(outputfile + '.input.pickle.gz', compression='gzip')
+            #response.to_pickle(outputfile + '.input.pickle.gz', compression='gzip')
         
         else:
             fields = inputfile.split('.')
@@ -133,6 +133,9 @@ def main():
             
             if file_type in ['xls', 'xlsx']:
                 response = pandas.read_excel(inputfile, index_col=0)
+            
+            elif file_type in ['csv']:
+                response = pandas.read_csv(inputfile, index_col=0)
             
             elif file_type in ['pickle', 'pkl'] or (file_type == 'gz' and fields.pop().lower() in ['pickle', 'pkl']):
                 response = pandas.read_pickle(inputfile)
