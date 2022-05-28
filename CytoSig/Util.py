@@ -118,8 +118,8 @@ def analyze_cellranger_lst(inputfile, min_count):
     
     fields = ['barcodes.tsv', 'genes.tsv', 'features.tsv', 'matrix.mtx']
     
-    for fprefix in input_lst:
-        fprefix = os.path.join(fpath, fprefix)
+    for condi in input_lst:
+        fprefix = os.path.join(fpath, condi)
         
         flag_err = False
         vmap = {}
@@ -152,6 +152,8 @@ def analyze_cellranger_lst(inputfile, min_count):
         if flag_err: continue
         
         mat = load_cell_ranger(genes, features, vmap['barcodes.tsv'], vmap['matrix.mtx'], min_count)
+        mat.columns = condi + '.' + mat.columns
+        
         results.append(mat)
     
     if len(results) == 0:
