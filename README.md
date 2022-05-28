@@ -22,12 +22,12 @@ CytoSig_run.py -i input_profile -o output_prefix -r random_count -a penalty_alph
 
 1, input_profile: input matrix of biological profiles. Three categories of formats are acceptable.  
 
-Format a, matrix file in excel (xls, xlsx, csv) or tab formats (plain or gzip formats). Each column is a biological condition, and each row should be a human gene symbol. Please see "tests/GSE147507.diff.gz" as an example.  
+ -Format a, matrix file in excel (xls, xlsx, csv) or tab formats (plain or gzip formats). Each column is a biological condition, and each row should be a human gene symbol. Please see "tests/GSE147507.diff.gz" as an example.  
 The expression values, from either RNASeq or MicroArray, should be transformed by log2(x+1). x could be FPKM, RPKM, or TPM for RNASeq. For single-cell RNASeq data, we used log2(TPM/10 + 1). We also recommend quantile-normalization across conditions. Some software package, such as RMA or DESeq, will automatically include all normalizations. We recommend input differential profiles between the two conditions. If data is from a sample collection without pairs, please mean-centralize the value of each gene across all samples.  
 
-Format b, python pickle formats: for matrix format in option a, you can save them as python pickle with names as "*.pickle.gz", "*.pkl.gz" or "*.pickle", "*.pkl".   
+ -Format b, python pickle formats: for matrix format in option a, you can save them as python pickle with names as "*.pickle.gz", "*.pkl.gz" or "*.pickle", "*.pkl".   
 
-Format c, cell ranger output: with file path and file name prefix separated by ","  
+ -Format c, cell ranger output: with file path and file name prefix separated by ","  
 **For Seurat users**: please save your Seurat object as cell ranger output with the following R command, and then run with this option.
 library(DropletUtils)  
 write10xCounts(x = your_object_name@assays$RNA@counts, path = "folder_path", version="3")  
