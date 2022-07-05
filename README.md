@@ -82,6 +82,6 @@ signature = os.path.join(sys.prefix, 'bin', 'signature.centroid') # load cytokin
 signature = pandas.read_csv(signature, sep='\t', index_col=0)  
 beta, std, zscore, pvalue = CytoSig.ridge_significance_test(signature, Y, alpha=1E4, alternative="two-sided", nrand=1000, cnt_thres=10, flag_normalize=True, verbose = True)  
 
-**Usage futher examples**:  
+**More Usage Examples**:  
 We prepared a package for reproducing major prediction results in our paper and demonstrating more usages: [https://github.com/data2intelligence/CytoSig_prediction](https://github.com/data2intelligence/CytoSig_prediction).  
 In particular, this package demonstrated more single-cell analyses using H5 files or Seurat object.  
