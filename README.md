@@ -62,7 +62,8 @@ Download some sample cellranger output files:
   
 Then, run CytoSig like this:  
 CytoSig_run.py -i GSE139829\_sample/GSM4147093\_UMM059\_,GSM4147096\_UMM063\_,GSM4147099\_UMM066\_ -o output    
-
+  
+*Note*: H5 files or Seurat objects are also common formats for single-cell RNASeq data. Please see our further demonstrations on how to convert H5 or Seurat files at [https://github.com/data2intelligence/CytoSig_prediction](https://github.com/data2intelligence/CytoSig_prediction).  
 
 **Usage 2, through Python function inside your customized code**:  
 Input:  
@@ -80,3 +81,7 @@ import os, sys, pandas, CytoSig
 signature = os.path.join(sys.prefix, 'bin', 'signature.centroid') # load cytokine response signature installed in your python system path    
 signature = pandas.read_csv(signature, sep='\t', index_col=0)  
 beta, std, zscore, pvalue = CytoSig.ridge_significance_test(signature, Y, alpha=1E4, alternative="two-sided", nrand=1000, cnt_thres=10, flag_normalize=True, verbose = True)  
+
+**Usage futher examples**:  
+We prepared a package for reproducing major prediction results in our paper and demonstrating more usages: [https://github.com/data2intelligence/CytoSig_prediction](https://github.com/data2intelligence/CytoSig_prediction).  
+In particular, this package demonstrated more single-cell analyses using H5 files or Seurat object.  
