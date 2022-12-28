@@ -9,10 +9,10 @@ Please read its README.md and run test to make sure the successful installation.
 4, openpyxl >= 3.0.9: pip install --upgrade openpyxl
 
 **Install**:
-python setup.py install
+pip install .
 
 **Test**:
-python -m unittest tests.prediction
+python3 -m unittest tests.prediction
 
 Please see **tests/prediction.py** for examples of two usages explained below.  
 
