@@ -1,8 +1,17 @@
-import pandas, numpy, sys, os
+import pandas, numpy, sys, os, site
 import ridge_significance
 
 from glob import glob
 from scipy import io
+
+def find_signature_path():
+    path_lst = site.getsitepackages()
+    
+    for fpath in path_lst:
+        f = os.path.join(fpath.split('lib')[0], 'bin', 'signature.centroid')
+        if os.path.exists(f): return f
+    
+    return None
 
 
 def dataframe_to_array(x, dtype = None):

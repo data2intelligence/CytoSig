@@ -38,7 +38,8 @@ class TestPrediction(unittest.TestCase):
             self.assertTrue(flag)
         
         # run python functions as usage 2
-        signature = os.path.join(sys.prefix, 'bin', 'signature.centroid') # load cytokine response signature installed in your python system path    
+        signature = CytoSig.find_signature_path()
+        
         signature = pandas.read_csv(signature, sep='\t', index_col=0)
         Y = pandas.read_csv(Y, sep='\t', index_col=0)
         
