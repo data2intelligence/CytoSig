@@ -78,7 +78,9 @@ pvalue: statistical significance
 Then, use the following code snippet in your program:  
 
 import os, sys, pandas, CytoSig  
-signature = os.path.join(sys.prefix, 'bin', 'signature.centroid') # load cytokine response signature installed in your python system path    
+
+signature = CytoSig.find_signature_path() # load cytokine response signature installed  
+    
 signature = pandas.read_csv(signature, sep='\t', index_col=0)  
 beta, std, zscore, pvalue = CytoSig.ridge_significance_test(signature, Y, alpha=1E4, alternative="two-sided", nrand=1000, cnt_thres=10, flag_normalize=True, verbose = True)  
 
