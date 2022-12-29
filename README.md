@@ -11,6 +11,8 @@ Please read its README.md and run test to make sure the successful installation.
 **Install**:
 pip install .
 
+Note: if you fail to install pre-requisite packages and CytoSig on your local computer, welcome to try our Docker solution in Usage 3 below.  
+
 **Test**:
 python3 -m unittest tests.prediction
 
@@ -87,3 +89,13 @@ beta, std, zscore, pvalue = CytoSig.ridge_significance_test(signature, Y, alpha=
 **More Usage Examples**:  
 We prepared a package for reproducing major prediction results in our paper and demonstrating more usages: [https://github.com/data2intelligence/CytoSig_prediction](https://github.com/data2intelligence/CytoSig_prediction).  
 In particular, this package demonstrated more single-cell analyses using H5 files or Seurat object.  
+
+**Usage 3, through Docker**:  
+We prepared a Docker image "data2intelligence/data2intelligence-suite" for ARM64 (e.g., Apple silicon) and AMD64 (x86_64, works on Intel chip) architectures. Users don't have to install CytoSig locally to use it.  
+Please first install Docker here: [https://www.docker.com/](https://www.docker.com/)
+
+Example 1:
+At the folder where you have downloaded CytoSig package, enter the test path with example data by "cd CytoSig/tests". Then, run the following docker command:  
+docker run -it -w /tests -v "$(pwd):/tests" data2intelligence/data2intelligence-suite  
+
+Example 2:
