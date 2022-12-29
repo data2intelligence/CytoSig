@@ -11,7 +11,7 @@ Please read its README.md and run test to make sure the successful installation.
 **Install**:
 pip install .
 
-Note: if you fail to install pre-requisite packages and CytoSig on your local computer, welcome to try our Docker solution in Usage 3 below.  
+**Note**: if you fail to install pre-requisite packages and CytoSig on your local computer, welcome to try our Docker solution in Usage 3 below.  
 
 **Test**:
 python3 -m unittest tests.prediction
@@ -97,5 +97,7 @@ Please first install Docker here: [https://www.docker.com/](https://www.docker.c
 Example 1:
 At the folder where you have downloaded CytoSig package, enter the test path with example data by "cd CytoSig/tests". Then, run the following docker command:  
 docker run -it -w /tests -v "$(pwd):/tests" data2intelligence/data2intelligence-suite  
+After this step, you will enter a Docker container with CytoSig pre-installed and your local folder tests mounted to folder tests in the container. Then, you can run the following command on the example data.  
+CytoSig_run.py -i GSE147507.diff.gz -o output -e 1  
 
 Example 2:
