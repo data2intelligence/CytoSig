@@ -1,10 +1,1 @@
-SOFTWARE USE AGREEMENT FOR CYTOSIG (CYTOKINE SIGNALING ANALYZER).
-The CytoSig (Cytokine Signaling) Software, proprietary to the National Cancer Institute (NCI), Cancer Data Science Laboratory, aims to help biologists to study the cellular response to signaling molecules (e.g., cytokines, chemokines, and growth factors), leveraging the public expression data from treatment experiments deposited in the NCBI GEO and ArrayExpress databases. A user of the CytoSig Software (“Software User”) can query cell signals and analyze genes induced or repressed (SEARCH module) and can also input a gene expression profile, and analyze the enriched signals, leveraging the treatment response profiles collected (RUN module).
-
-Software User agrees to:
-
-1, Use the CytoSig Software for non-profit, research purposes only. Any other use, including any use by a for-profit entity, requires a separate trial or complete license from the NCI by email Dr. Peng Jiang (peng.jiang@nih.gov) and Kevin Chang (changke@mail.nih.gov);
-2, Maintain possession and control of the software and not to distribute the CytoSig Software to any third-parties (i.e. non-registered user);
-3, Acknowledge the laboratory of Dr. Peng Jiang in the NCI Cancer Data Science Laboratory as the source of the CytoSig Software in all oral and written public disclosures and publications; and
-4, Use the CytoSig Software in accordance with all applicable laws, rules and regulations, and policies.
-NCI MAKES NO REPRESENTATIONS AND EXTENDS NO WARRANTIES OF ANY KIND, EITHER EXPRESSED OR IMPLIED. THERE ARE NO EXPRESS OR IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE, OR THAT THE USE OF THE SOFTWARE WILL NOT INFRINGE ANY PATENT, COPYRIGHT, TRADEMARK, OR OTHER PROPRIETARY RIGHTS. Unless prohibited by law, Software User assumes all liability for claims for damages against it by third parties which may arise from its use of the software.
+Users can use CytoSig under the GNU General Public License version 3: https://www.gnu.org/licenses/gpl-3.0.en.html
