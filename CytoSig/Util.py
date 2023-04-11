@@ -79,6 +79,18 @@ def ridge_significance_test(X, Y, alpha, alternative="two-sided", nrand=1000, cn
 
 
 
+def convert_mouse_matrix(data):
+    if data.index[0] == data.index[0].title():
+        sys.stderr.write('Error: it seems this dataset is from mouse.\nAlthough we will still generate some results, please convert your genes to human orthologs.\n')
+        
+        data.index = [v.upper() for v in data.index]
+        data = data.groupby(data.index).mean()
+    
+    return data
+    
+    
+
+
 def load_cell_ranger(genes, features, barcodes, matrix, min_count, included = None):
     """
     genes: cell ranger v2
@@ -110,6 +122,7 @@ def load_cell_ranger(genes, features, barcodes, matrix, min_count, included = No
     
     # jump bad cells, if any
     barcode_cnt = matrix.sum()
+    
     if barcode_cnt.min() < min_count:
         matrix = matrix.loc[:, matrix.sum() >= min_count]
 
@@ -119,6 +132,9 @@ def load_cell_ranger(genes, features, barcodes, matrix, min_count, included = No
         matrix = matrix.loc[cnt_map.loc[matrix.index] == 1]
     
     assert matrix.index.value_counts().max() == 1
+    
+    # just in case, if mouse gene names are used
+    matrix = convert_mouse_matrix(matrix)
     
     # restrain on pre-defined gene set as not all genes will involve in later regressions.
     if included is not None:

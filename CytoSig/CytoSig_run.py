@@ -157,7 +157,9 @@ def main():
             
             else:
                 response = pandas.read_csv(inputfile, sep='\t', index_col=0)
-        
+            
+            response = CytoSig.convert_mouse_matrix(response)
+    
     except:
         sys.stderr.write('Fail to open input file %s\n' % inputfile)
         sys.exit(1)
