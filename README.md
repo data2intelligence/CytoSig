@@ -14,7 +14,7 @@ pip install .
 **Note**: if you fail to install pre-requisite packages and CytoSig on your local computer, welcome to try our Docker solution in Usage 3 below.  
 
 **Test**:
-python3 -m unittest tests.prediction
+python -m unittest tests.prediction
 
 Please see **tests/prediction.py** for examples of two usages explained below.  
 
