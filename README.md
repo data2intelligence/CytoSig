@@ -47,7 +47,7 @@ The expression values, from either RNASeq or MicroArray, should be transformed b
 
 5, generate_excel: whether generate excel output. The value could be 1 (Yes) or 0 (No) with a default value 0. This option is only effective when the input condition count is less than 50.
 
-6, expand_signature: whether use an expanded signature of cytokine response. Our initial cytokine response signature included 43 cytokines with high confidence data. However, we can also set a less stringent filter to include 51 cytokines.  
+6, expand_signature: whether use an expanded signature of cytokine response. Our initial cytokine response signature included 43 cytokines with high confidence data (-s 0). However, we can also set a less stringent filter to include 51 cytokines (-s 1). We also included a beta version of the response signature as we are expanding the CytoSig datasets now (-s 2). However, the beta version is not fully validated yet. Please use it at your caution.  
 
 Following options will only be effective if the input is cell ranger output.  
 7, minimum_read_count: Minimal read counts required for each barcode. Default 1000  

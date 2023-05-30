@@ -20,11 +20,11 @@ def main():
     zero_ratio = 0.95
     
     flag_report = False
-    flag_expand = False
+    flag_expand = 0
     
     inputfile = outputfile = response = None
     
-    prompt_msg = 'Usage:\nCytoSig_run.py -i <input profiles> -o <output prefix> -r <randomization count, default: %d> -a <penalty alpha, default: %s> -e <generate excel report: 0|1, default: %d> -s <use an expanded response signature: 0|1, default: %d> -c <minimum read count if input cellranger mtx, default: %d> -z <maximum zero dropout ratio, default: %s>\n' % (nrand, alpha, flag_report, flag_expand, min_count, zero_ratio)
+    prompt_msg = 'Usage:\nCytoSig_run.py -i <input profiles> -o <output prefix> -r <randomization count, default: %d> -a <penalty alpha, default: %s> -e <generate excel report: 0|1, default: %d> -s <version of response signature: 0 (original), 1 (expand), 2 (beta version) default: %d> -c <minimum read count if input cellranger mtx, default: %d> -z <maximum zero dropout ratio, default: %s>\n' % (nrand, alpha, flag_report, flag_expand, min_count, zero_ratio)
     
     try:
         opts, _ = getopt.getopt(sys.argv[1:], "hi:o:r:a:e:s:c:z:", [])
@@ -74,7 +74,7 @@ def main():
             flag_report = (int(arg) != False)
             
         elif opt in ("-s"):
-            flag_expand = (int(arg) != False)
+            flag_expand = int(arg)
             
         elif opt in ("-c"):
             min_count = int(arg)
@@ -103,7 +103,14 @@ def main():
     ###############################################################
     # load regression signature
     signature = os.path.join(fpath, 'signature.centroid')
-    if flag_expand: signature += '.expand'
+    
+    if flag_expand == 1:
+        signature += '.expand'
+    elif flag_expand == 2:
+        signature += '.beta'
+    elif flag_expand != 0:
+        sys.stderr.write('Cannot recognize -s flag %d.\n' % flag_expand)
+        sys.exit(1)
     
     signature = pandas.read_csv(signature, sep='\t', index_col=0)
     
