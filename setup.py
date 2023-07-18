@@ -39,6 +39,7 @@ setup(
     install_requires=[
         'numpy',
         'pandas',
+        'scipy',
         'ridge_significance',
     ],
     
