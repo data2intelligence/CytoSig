@@ -16,7 +16,7 @@ class PostInstallCommand(install):
 
 setup(
     name="CytoSig",
-    version="0.0.2",
+    version="0.0.3",
     author="Peng Jiang",
     author_email="peng.jiang@nih.gov",
     description="Prediction model for cytokine signaling activity",
