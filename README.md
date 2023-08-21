@@ -1,7 +1,7 @@
 CytoSig prediction model of cytokine signaling activity
 
 **Prerequisite**:  
-1, ridge_significance: https://github.com/data2intelligence/ridge_significance  
+1, data_significance: https://github.com/data2intelligence/data_significance  
 Please read its README.md and run test to make sure the successful installation.  
 
 2, pandas >= 1.1.4: You may install anaconda (https://www.anaconda.com) to include all required python packages.  

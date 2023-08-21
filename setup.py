@@ -40,7 +40,7 @@ setup(
         'numpy',
         'pandas',
         'scipy',
-        'ridge_significance',
+        'data_significance',
     ],
     
     data_files=[

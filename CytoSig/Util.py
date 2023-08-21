@@ -1,5 +1,5 @@
 import pandas, numpy, sys, os, site
-import ridge_significance
+import data_significance
 
 from glob import glob
 from scipy import io
@@ -68,11 +68,11 @@ def ridge_significance_test(X, Y, alpha, alternative="two-sided", nrand=1000, cn
         result = [None] * N_alpha
             
         for i in range(N_alpha):
-            result[i] = ridge_significance.fit(X,Y, alpha[i], alternative, nrand, verbose)
+            result[i] = data_significance.ridge(X,Y, alpha[i], alternative, nrand, verbose)
             result[i] = array_to_dataframe(result[i], X_columns, Y_columns)
     else:
         # if only one alpha value
-        result = ridge_significance.fit(X,Y, alpha, alternative, nrand, verbose)
+        result = data_significance.ridge(X,Y, alpha, alternative, nrand, verbose)
         result = array_to_dataframe(result, X_columns, Y_columns)
 
     return result
