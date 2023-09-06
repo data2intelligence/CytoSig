@@ -5,17 +5,17 @@ CytoSig prediction model of cytokine signaling activity
 Please read its README.md and run test to make sure the successful installation.  
 
 2, pandas >= 1.1.4: You may install anaconda (https://www.anaconda.com) to include all required python packages.  
-3, xlsxwriter >= 1.3.7: pip install --upgrade xlsxwriter  
-4, openpyxl >= 3.0.9: pip install --upgrade openpyxl  
-5, scipy: pip install --upgrade scipy
+3, xlsxwriter >= 1.3.7: pip3 install --upgrade xlsxwriter  
+4, openpyxl >= 3.0.9: pip3 install --upgrade openpyxl  
+5, scipy: pip3 install --upgrade scipy
 
 **Install**:
-pip install .
+pip3 install .
 
 **Note**: if you fail to install pre-requisite packages and CytoSig on your local computer, welcome to try our Docker solution in Usage 3 below.  
 
 **Test**:
-python -m unittest tests.prediction
+python3 -m unittest tests.prediction
 
 Please see **tests/prediction.py** for examples of two usages explained below.  
 
