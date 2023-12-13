@@ -141,7 +141,7 @@ def load_cell_ranger(genes, features, barcodes, matrix, min_count, included = No
         matrix = matrix.loc[matrix.index.intersection(included)]
     
     # remove empty genes
-    matrix = matrix.loc[(matrix == 0).mean(axis=1) < 1]
+    matrix = matrix.loc[(matrix == 0).sum(axis=1)/matrix.shape[1] < 1]
     
     return matrix
 

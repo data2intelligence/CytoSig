@@ -129,7 +129,7 @@ def main():
                 sys.exit(1)
 
             # filter bad genes
-            response = response.loc[(response == 0).mean(axis=1) < zero_ratio]
+            response = response.loc[(response == 0).sum(axis=1)/response.shape[1] < zero_ratio]
             
             # filter bad cell barcodes
             response = response.loc[:, response.sum() >= min_count]
