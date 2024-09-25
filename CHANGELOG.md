@@ -9,3 +9,4 @@ All notable changes to this project will be documented in this file.
 - 2023-04-01: Change the previous NCI software license to GPLv3  
 - 2023-04-11: Add a warning message if the input data seems to be from mouse  
 - 2023-05-30: Add a beta version of the response signature, which was NOT comprehensively validated yet. Please use it at your caution.  
+- 2024-09-25: Fix a bug due to Python upgrade from 3.8, suggested by Kelvin Lee.  
