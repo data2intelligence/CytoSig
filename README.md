@@ -12,7 +12,7 @@ Please read its README.md and run test to make sure the successful installation.
 **Install**:
 pip3 install .
 
-**Note**: if you fail to install pre-requisite packages and CytoSig on your local computer, welcome to try our Docker solution in Usage 3 below.  
+**Note**: Some users told me that CytoSig installation only works on CPython (default python) implementation, such as anaconda; while, pypy does not work. However, if you fail to install pre-requisite packages and CytoSig on your local computer, welcome to try our Docker solution in Usage 3 below.  
 
 **Test**:
 python3 -m unittest tests.prediction
