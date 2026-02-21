@@ -13,7 +13,11 @@ Please read its README.md and run test to make sure the successful installation.
 pip3 install .
 
 **Note**: Some users told me that CytoSig installation only works on CPython (default python) implementation, such as anaconda; while, pypy does not work. However, if you fail to install pre-requisite packages and CytoSig on your local computer, welcome to try our Docker solution in Usage 3 below.  
-
+  
+**For R programmers**:  You can run CytoSig in R using our [SecAct](https://github.com/data2intelligence/SecAct) package as follows:  
+SecAct.activity.inference(... ..., sigMatrix = "CytoSig", scale.factor = 10000).  
+For single-cell and spatial transcriptomics data input, the function names will be SecAct.activity.inference.scRNAseq and SecAct.activity.inference.ST, respectively.  
+   
 **Test**:
 python3 -m unittest tests.prediction
 
@@ -34,6 +38,8 @@ The expression values, from either RNASeq or MicroArray, should be transformed b
 **For Seurat users**: please save your Seurat object as cell ranger output with the following R commands, and then run with this option.  
 > library(DropletUtils)  
 > write10xCounts(x = your_object_name@assays$RNA@counts, path = "folder_path", version="3")  
+
+Alternatively, you can use the R SecAct package directly, following the instructions in the section **For R programmers** above.  
   
 2, output_prefix: prefix of output files. Each column is a biological condition, and each row is a cytokine name  
     output_prefix.Coef: regression coefficients  
